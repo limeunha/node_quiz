@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 
 function adminMiddleware(req, res, next) {
    console.log('Admin middleware executed')
-   res.send('Welcome, Admind!')
+   res.send('Welcome, Admin!')
 }
 
 function userMiddleware(req, res, next) {
