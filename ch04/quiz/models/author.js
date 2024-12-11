@@ -10,20 +10,22 @@ module.exports = class Author extends Sequelize.Model {
             },
             age: {
                type: Sequelize.INTEGER,
-               allowNull: false,
+               allowNull: true,
             },
          },
          {
             sequelize,
-            timestamps: false,
-            modelName: 'Author',
-            tableName: 'authors',
+            timestamps: true,
+            underscored: false,
+            modelName: 'Post',
+            tableName: 'posts',
+            paranoid: false,
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci',
          }
       )
    }
-
+   //부모
    static associate(db) {
       db.Author.hasMany(db.Book, {
          foreignKey: 'AuthorId',

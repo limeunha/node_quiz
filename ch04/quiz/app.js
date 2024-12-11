@@ -7,6 +7,9 @@ const dotenv = require('dotenv') // 환경 변수 관리 라이브러리
 const { sequelize } = require('./models') // Sequelize를 통해 데이터베이스 연결
 
 // 라우터 모듈 불러오기
+const indexRouter = require('./routes')
+const authorsRouter = require('./routes/authors')
+const booksRouter = require('./routes/books')
 
 dotenv.config()
 
@@ -14,6 +17,14 @@ const app = express()
 app.set('port', process.env.PORT || 5000)
 
 // 데이터베이스 연결 설정
+sequelize
+   .sync({ force: false }) //초기화 false:초기화 X , thre: 초기화 O
+   .then(() => {
+      console.log('데이터 베이스 연결 성공')
+   })
+   .catch((err) => {
+      console.error(err)
+   })
 
 // 공통 미들웨어 설정
 app.use(morgan('dev'))
@@ -22,6 +33,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // 라우터 연결
+app.use('/', indexRouter)
+app.use('/authors', authorsRouter)
+app.use('/books', booksRouter)
 
 // 404 에러 처리 미들웨어
 app.use((req, res, next) => {
